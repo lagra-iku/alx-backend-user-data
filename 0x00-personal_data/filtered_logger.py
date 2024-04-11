@@ -4,20 +4,16 @@ Regex-ing
 """
 
 import re
+from typing import List
 
 
-def filter_datum(fields, redaction, message, separator):
-    """
-    a function called filter_datum that returns the log message obfuscated:
-    """
-    """
-    for field in fields:
-        mesage = re.sub(f'{field}=.*?{separator}',
-                        f'{field}={redaction}{separator}', message)
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
+    """a function called filter_datum that returns the log msg obfuscated"""
+    for f in fields:
+        message = re.sub(f'{f}=.*?{separator}',
+                         f'{f}={redaction}{separator}', message)
     return message
-    """
-    pattern = '|'.join(map(re.escape, fields))
-    return re.sub(pattern, redaction, message).replace(f'{separator}{separator}', separator)
 
 
 if __name__ == "__main__":
