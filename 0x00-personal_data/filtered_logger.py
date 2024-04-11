@@ -66,5 +66,19 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return connection
 
 
+def main():
+    """Read and filter data"""
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    field_names = [i[0] for i in cursor.description]
+    logger = get_logger()
+    for row in cursor:
+        rec = ''.join(f'{f}={str(r)}; ' for r, f in zip(row, field_names))
+        logger.info(rec.strip())
+    cursor.close()
+    db.close()
+
+
 if __name__ == "__main__":
     main()
