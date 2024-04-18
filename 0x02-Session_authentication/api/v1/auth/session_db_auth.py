@@ -3,7 +3,7 @@
 """
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
-from models.base import db_session
+from os import getenv
 
 
 class SessionDBAuth(SessionExpAuth):
