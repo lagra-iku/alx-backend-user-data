@@ -4,7 +4,6 @@
 
 from flask import jsonify, request, make_response, abort
 from models.user import User
-from api.v1.app import app, auth
 from api.v1.views import app_views
 from os import getenv
 
@@ -25,14 +24,17 @@ def login():
     if not users:
         return jsonify({"error": "no user found for this email"}), 404
 
-    user = users[0]
-    if not user.is_valid_password(password):
-        return jsonify({"error": "wrong password"}), 401
-
-    session_id = auth.create_session(user.id)
-    response = jsonify(user.to_json())
-    response.set_cookie(os.getenv('SESSION_NAME'), session_id)
-    return response
+    for user in users:
+        if user.is_valid_password(password):
+            user_id = u.id
+            from api.v1.app import auth
+            session_id = auth.create_session(user_id)
+            response = jsonify(user.to_json())
+            response.set_cookie(getenv('SESSION_NAME'), session_id)
+            return response
+        else:
+            return jsonify(error="wrong password"), 401
+    return jsonify(error="no user found for this email"), 404   
 
 
 @app.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
