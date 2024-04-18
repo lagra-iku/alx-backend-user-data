@@ -2,12 +2,10 @@
 """A module for the Session Authentication class.
 """
 
-from api.v1.views import app_views
-from api.v1.auth.auth import Auth
-from flask import abort, jsonify, request
+from uuid import uuid4
+from flask import request
+from .auth import Auth
 from models.user import User
-import os
-from typing import Tuple
 
 
 class SessionAuth(Auth):
