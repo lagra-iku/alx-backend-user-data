@@ -2,6 +2,7 @@
 """ Module of the auth Class
 """
 
+import os
 import re
 from typing import List, TypeVar
 from flask import request
