@@ -2,13 +2,14 @@
 """New view for Session Authentication
 """
 
-from flask import jsonify, request, make_response, abort
+from typing import Tuple
+from flask import abort, jsonify, request
 from models.user import User
 from api.v1.views import app_views
-from os import getenv
+import os
 
 
-@app.route('/auth_session/login', methods=['POST'], strict_slashes=False)
+@app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
     """method for new view for session authentication
     """
@@ -34,10 +35,11 @@ def login():
             return response
         else:
             return jsonify(error="wrong password"), 401
-    return jsonify(error="no user found for this email"), 404   
+    return jsonify(error="no user found for this email"), 404
 
 
-@app.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+        '/auth_session/logout', methods=['DELETE'], strict_slashes=False)
 def logout():
     """method to destroy session"""
     if not auth.destroy_session(request):
