@@ -2,9 +2,11 @@
 """New view for Session Authentication
 """
 
-from flask import jsonify, request, make_response
+from flask import jsonify, request, make_response, abort
 from models.user import User
 from api.v1.app import auth
+from api.v1.views import app_views
+from os import getenv
 
 
 @app.route('/auth_session/login', methods=['POST'], strict_slashes=False)
