@@ -25,6 +25,7 @@ class Auth:
     """Auth class"""
 
     def __init__(self):
+        """initialization"""
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> Union[None, User]:
