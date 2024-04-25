@@ -35,9 +35,5 @@ class DB:
         """Add_user method"""
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
-        try:
-            self._session.commit()
-        except IntegrityError:
-            self._session.rollback()
-            raise ValueError("User already exists with the provided email")
+        self._session.commit()
         return user
